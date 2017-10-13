@@ -48,7 +48,8 @@ router.get('/books',function(req,res){
 router.post('/add_book',function(req,res){
     
         var query = "insert into books(id,name,author,price) values(?,?,?,?)";
-        client.execute(query,req.body,function(err,result){
+        debugger;
+        client.execute(query,JSON.parse(req.body),{ prepare : true },function(err,result){
             if(!err){
                  res.send("done");
                  console.log("done");

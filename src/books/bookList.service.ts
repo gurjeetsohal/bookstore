@@ -18,6 +18,7 @@ export class BookListService{
     }
 
     addBookService(params){
-         return this._http.post("http://localhost:3000/api/add_book",params);
+
+         return this._http.post("http://localhost:3000/api/add_book",JSON.stringify(params));
     }
 }
