@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h2>Books List</h2></div>
+  <div class="panel-body">
+
+      <table class="table table-responsive">
+          <tr>
+              <td>Serial No.</td>
+              <td>Book Name</td>
+              <td>Book Id</td>
+              <td>Author</td>
+              <td>Price</td>
+
+          </tr>
+          <tr *ngFor="let book of books , let i=index " (click) = "setSelectedRow(i)" [class.active]="i===selectedRow">
+              <td>{{i}}</td>
+              <td>{{book.name}}</td>
+              <td>{{book.id}}</td>
+              <td>{{book.author}}</td>
+              <td>{{book.price | currency:'USD' : true :'1.2-2'}}</td>
+          </tr>
+            
+      </table>
+
+  </div>
+</div>
+<div>
+  <button class= "btn btn-primary" (click)="onEdit()">Edit</button>
+</div>    
+<div class = "col-md-6" *ngIf = "EDIT">
+    
+    <form id = "addBookForm" >
+        <label for="bookName">Book Name</label>
+        <input type="text" class = "form-control" id="bookName" #name/>
+
+        <label for="bookId">Book ID</label>
+        <input type="number" class = "form-control" id="bookId" #id/>
+        
+        <label for="bookAuthor">Book Author</label>
+        <input type="text" class = "form-control" id="bookAuthor" #author/>
+
+        <label for = "bookPrice">Price</label>
+        <input type="number" class = "form-control" id="bookPrice" #price/>
+        
+        
+    </form>
+    <button class= "btn btn-primary" (click)= "addBook(name.value,id.value,author.value,price.value)">Add Book</button>
+</div>
+    
