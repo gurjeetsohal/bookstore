@@ -11,14 +11,33 @@ export class BookListService{
        console.log('task service intialized');
     }
 
-    getLists(){
+    getListService(){
        return this._http.get("http://localhost:3000/api/books")
        .map(res => res.json())
        .do(res => console.log(res));
     }
 
     addBookService(params){
+        console.log("Booklistservice"+params)
+        let paramObj = {
+            param_arr : params
+        }
+         return this._http.post("http://localhost:3000/api/add_book",paramObj);
+         
+    }
 
-         return this._http.post("http://localhost:3000/api/add_book",JSON.stringify(params));
+    deleteBookService(bookId){
+        let paramObj = {
+            bookId : bookId
+        }
+       return this._http.post("http://localhost:3000/api/delete_book",paramObj);
+    }
+
+    updateBookService(params_arr){
+        let paramObj = {
+            param_arr : params_arr
+        }
+       
+        return this._http.post("http://localhost:3000/api/update_book",paramObj)
     }
 }

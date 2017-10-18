@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core' ;
+import { Component, OnInit , ViewChild, ElementRef} from '@angular/core' ;
 import { Ibook } from './BookInterface' ;
 import { BookListService }from './bookList.service';
+declare var $ : any;
 
 @Component({
     moduleId : module.id,
@@ -10,47 +11,44 @@ import { BookListService }from './bookList.service';
 export class BookListComponent implements OnInit{
      
      EDIT = false;
-     params : Ibook[] =[];
+     params_arr : Ibook[] =[];
      selectedRow : number;
      books : Ibook[];
-    //  books : Ibook[] =[
-    //      { name : "xyz" ,
-    //        author :" xyz",
-    //        id : 1 ,
-    //        price :100
-    //     },
-    //     { name : "xyz" ,
-    //        author :" xyz",
-    //        id : 1 ,
-    //        price :100
-    //     },
-    //     { name : "xyz" ,
-    //        author :" xyz",
-    //        id : 1 ,
-    //        price :100
-    //     },
-    //     { name : "xyz" ,
-    //        author :" xyz",
-    //        id : 1 ,
-    //        price :100
+     update_record_index = 0 ;
+     IsDataLoaded = false;
+     update_record_id = 0;
+     record_deleted = true;
+    // isEmpty(obj) {
+    //     for(var key in obj) {
+    //         if(obj.hasOwnProperty(key))
+    //             return false;
     //     }
-    //  ]
+    //     return true;
+    // }
+
+    
 
      setSelectedRow(index : number):void{
          this.selectedRow=index ;
      }
 
      constructor(private bookListService : BookListService){
-                this.bookListService.getLists()
-                .subscribe( data =>{
-                    console.log(data);
-                    this.books = data;
-                })           
+        this.getBooks(); 
+     }
+      
+     ngOnInit(){
+       
      }
 
-     ngOnInit(){
-        
+     getBooks(){
+        this.bookListService.getListService()
+        .subscribe( data =>{
+            console.log(data);
+            this.books = data;
+            this.IsDataLoaded = true;
+        })   
      }
+    
 
     onEdit(){
           this.EDIT = !this.EDIT;
@@ -58,17 +56,47 @@ export class BookListComponent implements OnInit{
 
     getFormData(name,id,author,price){
         
-        this.params.push(name,id,author,price);
-        console.log(this.params);
-        this.params.splice(0);
+        this.params_arr.push(id,name,author,price);
+        console.log(this.params_arr);
+       
    }
    
    addBook(name,id,author,price){
       this.getFormData(name,id,author,price);
-      this.bookListService.addBookService(this.params)
+      this.bookListService.addBookService(this.params_arr)
       .subscribe(result =>{
-          console.log(result);
+          console.log("Booklist component"+result);
+          this.params_arr.splice(0);
       });
    }
+   
+   deleteBook(bookId,i){
+       console.log("deleteBook invoked")
+       this.bookListService.deleteBookService(bookId)
+       .subscribe( result => {
+           console.log(result);
+           this.books.splice(i,1);
+           this.record_deleted = true;
+       })
+   }
+
+   updateRecordId(index,id){
+      this.update_record_index = index;
+      this.update_record_id = id;
+      console.log("update index : "+this.update_record_index+" , update id"+this.update_record_id);
+    }
+  
+   updateBook(name,id,author,price,old_id){
+
+       let params_arr : Ibook[] =[];
+       this.params_arr.push(id,name,author,price,old_id);
+       console.log("update book invoked");
+       this.bookListService.updateBookService(this.params_arr)
+       .subscribe(result=>{
+        console.log(result);
+        this.params_arr.splice(0);
+       })
+   }
+
 
 } 

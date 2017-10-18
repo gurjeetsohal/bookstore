@@ -1,48 +1,83 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><h2>Books List</h2></div>
+  <div class="panel-heading">
+    <h2>Books List</h2>
+  </div>
   <div class="panel-body">
 
-      <table class="table table-responsive">
-          <tr>
-              <td>Serial No.</td>
-              <td>Book Name</td>
-              <td>Book Id</td>
-              <td>Author</td>
-              <td>Price</td>
+    <table class="table table-responsive">
+      <tr>
+        <td>Serial No.</td>
+        <td>Book Id</td>
+        <td>Book Name</td>
+        <td>Author</td>
+        <td>Price</td>
 
-          </tr>
-          <tr *ngFor="let book of books , let i=index " (click) = "setSelectedRow(i)" [class.active]="i===selectedRow">
-              <td>{{i}}</td>
-              <td>{{book.name}}</td>
-              <td>{{book.id}}</td>
-              <td>{{book.author}}</td>
-              <td>{{book.price | currency:'USD' : true :'1.2-2'}}</td>
-          </tr>
-            
-      </table>
+      </tr>
+      <tr *ngFor="let book of books , let i=index " (click)="setSelectedRow(i)" [class.active]="i===selectedRow"  >
+        <td>{{i+1}}</td>
+        <td>{{book.id}}</td>
+        <td>{{book.name}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.price | currency:'USD' : true :'1.2-2'}}</td>
+        <td><button class="btn btn-danger" *ngIf="EDIT" (click)="deleteBook(book.id,i)">Delete</button></td>
+        <td><button type="button" class="btn btn-primary" *ngIf="EDIT" data-toggle="modal" data-target="#myModal" (click)="updateRecordId(i,book.id)">Update</button></td>
+        <!-- Modal -->
+      </tr>
+
+    </table>
 
   </div>
 </div>
-<div>
-  <button class= "btn btn-primary" (click)="onEdit()">Edit</button>
-</div>    
-<div class = "col-md-6" *ngIf = "EDIT">
-    
-    <form id = "addBookForm" >
-        <label for="bookName">Book Name</label>
-        <input type="text" class = "form-control" id="bookName" #name/>
+<div class="modal fade" id="myModal" role="dialog" *ngIf = "IsDataLoaded">
+  <div class="modal-dialog">
 
-        <label for="bookId">Book ID</label>
-        <input type="number" class = "form-control" id="bookId" #id/>
-        
-        <label for="bookAuthor">Book Author</label>
-        <input type="text" class = "form-control" id="bookAuthor" #author/>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update Book Information</h4>
+      </div>
+      <div class="modal-body">
+        <label for="id">Id</label>
+        <input type="number" class="form-control" id="id" name="id" [value]="books[update_record_index].id" #uid>
 
-        <label for = "bookPrice">Price</label>
-        <input type="number" class = "form-control" id="bookPrice" #price/>
-        
-        
-    </form>
-    <button class= "btn btn-primary" (click)= "addBook(name.value,id.value,author.value,price.value)">Add Book</button>
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" [value]="books[update_record_index].name"  #uname>
+
+        <label for="author">Author</label>
+        <input type="text" class="form-control" id="author" name="author" [value]="books[update_record_index].author"  #uauthor>
+
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" name="email" [value]="books[update_record_index].price"  #uprice>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="updateBook(uname.value,uid.value,uauthor.value,uprice.value,update_record_id)">Update</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
-    
+
+<div>
+  <button class="btn btn-primary" (click)="onEdit()">Edit</button>
+</div>
+<div class="col-md-6" *ngIf="EDIT">
+
+  <form id="addBookForm">
+    <label for="bookName">Book Name</label>
+    <input type="text" class="form-control" id="bookName" #name/>
+
+    <label for="bookId">Book ID</label>
+    <input type="number" class="form-control" id="bookId" #id/>
+
+    <label for="bookAuthor">Book Author</label>
+    <input type="text" class="form-control" id="bookAuthor" #author/>
+
+    <label for="bookPrice">Price</label>
+    <input type="number" class="form-control" id="bookPrice" #price/>
+
+
+  </form>
+  <button class="btn btn-primary" (click)="addBook(name.value,id.value,author.value,price.value)">Add Book</button>
+</div>
