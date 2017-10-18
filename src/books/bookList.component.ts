@@ -1,6 +1,11 @@
 import { Component, OnInit , ViewChild, ElementRef} from '@angular/core' ;
 import { Ibook } from './BookInterface' ;
 import { BookListService }from './bookList.service';
+import {Observable} from 'rxjs/Observable' ; 
+import "rxjs/rx";
+import 'rxjs/add/operator/map' ;
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 declare var $ : any;
 
 @Component({
@@ -41,14 +46,18 @@ export class BookListComponent implements OnInit{
      }
 
      getBooks(){
-        this.bookListService.getListService()
+       let source = this.bookListService.getListService()
         .subscribe( data =>{
             console.log(data);
             this.books = data;
             this.IsDataLoaded = true;
+            // this.subscribeToData();
         })   
      }
     
+    //  private subscribeToData(){
+    //     Observable.timer(1000).first().subscribe(() => this.getBooks());
+    // }
 
     onEdit(){
           this.EDIT = !this.EDIT;
@@ -77,6 +86,7 @@ export class BookListComponent implements OnInit{
            console.log(result);
            this.books.splice(i,1);
            this.record_deleted = true;
+           
        })
    }
 
