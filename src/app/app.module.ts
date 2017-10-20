@@ -8,11 +8,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from '../home/home.component';
 import { BookListComponent } from '../books/bookList.component' ;
 import { BookListService } from '../books/bookList.service';
+import { LoginComponent } from '../login/login.component';
+import { LoginService } from '../login/login.service';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    BookListComponent
+    BookListComponent,
+    LoginComponent
     ],
 
   imports: [
@@ -28,7 +32,7 @@ import { BookListService } from '../books/bookList.service';
     ])
   ],
   
-  providers: [ BookListService],
+  providers: [ BookListService,LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

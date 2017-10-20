@@ -7,6 +7,7 @@ const cassandra = require('cassandra-driver');
 
 // Get our API routes
 const api = require('./server/routes/api');
+const login = require('./server/routes/login');
 const app = express();
 
 // Parsers for POST data
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 
 app.use('/api', api);
+app.use('/login',login);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

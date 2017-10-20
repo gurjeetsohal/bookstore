@@ -23,14 +23,7 @@ export class BookListComponent implements OnInit{
      IsDataLoaded = false;
      update_record_id = 0;
      record_deleted = true;
-    // isEmpty(obj) {
-    //     for(var key in obj) {
-    //         if(obj.hasOwnProperty(key))
-    //             return false;
-    //     }
-    //     return true;
-    // }
-
+   
     
 
      setSelectedRow(index : number):void{
