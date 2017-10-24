@@ -4,6 +4,8 @@ const http = require('http');
 const bodyParser = require('body-parser');
 
 const cassandra = require('cassandra-driver');
+const expressJWT = require('express-jwt');
+const jwt = require('jsonwebtoken');
 
 // Get our API routes
 const api = require('./server/routes/api');
@@ -14,6 +16,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -21,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api', api);
 app.use('/login',login);
+
+
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

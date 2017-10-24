@@ -13,11 +13,12 @@ export class LoginComponent{
     constructor(private loginService : LoginService){
 
     }
+    user = {
+        email : "" ,
+        password : ""
+    }
      
-    onSubmit(email,password){
-        this.loginService.onSubmitService(email,password)
-        .subscribe(result =>{
-             
-        }) 
+    onSubmit(){
+        
     }
 }
