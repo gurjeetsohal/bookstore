@@ -17,35 +17,40 @@ client.connect(function(err,result){
 //           author :" xyz",
 //           id : 1 ,
 //           price :100
-//        },
-//        { name : "xyz" ,
-//           author :" xyz",
-//           id : 1 ,
-//           price :100
-//        },
-//        { name : "xyz" ,
-//           author :" xyz",
-//           id : 1 ,
-//           price :100
-//        },
-//        { name : "xyz" ,
-//           author :" xyz",
-//           id : 1 ,
-//           price :100
 //        }
 //     ]);
 // })
 
-router.get('/books',function(req,res){
-
-    var query = "select * from books";
-    client.execute(query,function(err,result){
-        if(!err){
-             res.json(result.rows);
-        }
+router.post('/books',function(req,res){
+     jwt.verify(req.body.token, 'secret_key', function(err, data) {
+        if (err) {
+          res.redirect('http://localhost:3000/login/log_in')
+          res.sendStatus(403);
+        }else{
+          var query = "select * from books";
+           console.log(req.body);
+           client.execute(query,function(err,result){
+              if(!err){
+                res.json(result.rows);
+              }
+           }) 
+       }
     })
 })
 
+// function ensureToken(req, res, next) {
+//     const bearerHeader = req.headers["authorization"];
+//     if (typeof bearerHeader !== 'undefined') {
+//       const bearer = bearerHeader.split(" ");
+//       const bearerToken = bearer[1];
+//       req.token = bearerToken;
+//       next();
+//     } else {
+//       res.redirect('http://localhost:3000/login/test')
+//       res.sendStatus(403);
+//     }
+//   }
+  
 //JSON.parse(req.body.param_arr),{ prepare : true },
 
 router.post('/add_book',function(req,res){

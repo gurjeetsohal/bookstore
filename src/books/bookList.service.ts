@@ -12,7 +12,8 @@ export class BookListService{
     }
 
     getListService(){
-       return this._http.get("http://localhost:3000/api/books")
+
+        return this._http.post("http://localhost:3000/api/books",{token : localStorage.getItem("token")})
        .map(res => res.json())
        .do(res => console.log(res));
     }

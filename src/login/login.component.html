@@ -1,14 +1,30 @@
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+<form (ngSubmit)="onSubmit(email.value,password.value)" #f="ngForm">
     <div class="form-group">
       <label for="email">Email address</label>
-      <input type="email" class="form-control" id="email"  placeholder="Enter email"  [(ngModel)]="user.username" name="email" required #email="ngModel">
-      <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <input type="email" class="form-control" id="email"  placeholder="Enter email"  
+      [(ngModel)]="user.username" name="email" #email="ngModel" 
+      [ngClass]="{'inv_border':email.invalid && email.touched ,'v_border':email.valid || password.untouched}"required>
+      <div class="well well-sm"  *ngIf="email.invalid && email.touched">
+        <small>Please enter the valid email address</small>
+      </div>
+
+
+      <small id="email" class="form-text text-muted">
+        We'll never share your email with anyone else.
+      </small>
     </div>
-    <br>{{f}}{{email}}
+   
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="user.password" name="password" required #password="ngModel">
+      <input type="password" class="form-control v_border" id="password" placeholder="Password" 
+      [ngClass]="{'inv_border':password.invalid && password.touched ,'v_border':password.valid || password.untouched}" [(ngModel)]="user.password" 
+      name="password" required #password="ngModel">
+   
+      <div class="well well-sm"  *ngIf="password.invalid && password.touched">
+          <small>Please enter the password</small>
+        </div>
     </div>
    
     <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
   </form>
+  
