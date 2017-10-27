@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+//var token = require('./login.js');
+var jwt=require('jsonwebtoken');
+
 
 
 const cassandra = require('cassandra-driver');

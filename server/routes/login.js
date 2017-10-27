@@ -8,12 +8,6 @@ client.connect(function(err,result){
     console.log('cassandra connected')
 });
 
-router.post('/test',function(req,res){
-    res.json({
-      index: "data posted",
-      name : req.body
-    }) 
-})
 
 router.post('/log_in',function(req,res){
    console.log(req.body);
@@ -41,6 +35,13 @@ router.post('/log_in',function(req,res){
 
 //***********************dont delete important code*************************
 
+// router.post('/test',function(req,res){
+//   res.json({
+//     index: "data posted",
+//     name : req.body
+//   }) 
+// })
+
 // router.get('/protected', ensureToken, function(req, res) {
 //   jwt.verify(req.token, 'secret_key', function(err, data) {
 //     if (err) {
@@ -66,6 +67,8 @@ router.post('/log_in',function(req,res){
 //     res.sendStatus(403);
 //   }
 // }
+
 //*******************************Dont delete*****************************************
 
 module.exports = router;
+//module.exports.token = token;

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core' ;
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
     moduleId : module.id ,
@@ -17,7 +18,7 @@ export class LoginComponent{
         password : ""
     }
 
-    constructor(private loginService : LoginService){ }
+    constructor(private loginService : LoginService , private router: Router){ }
 
        
     onSubmit(email,password){
@@ -26,6 +27,7 @@ export class LoginComponent{
              this.token = data.json().token;
              console.log(data.json().token);
              localStorage.setItem("token",this.token);
+             this.router.navigate(['/bookList']);
         });
     }
 }
